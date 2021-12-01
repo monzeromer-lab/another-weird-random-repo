@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Socket io with mysql</title>
+  <!-- <script type="text/javascript"
+      src="./socket.io.min.js"></script> -->
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body style="background-color: black;">
+  <h1 style="text-align: center;
+      font-family: cursive;
+      color: white;">test websockets with database</h1>
+  <p style="text-align: center;
+      font-size: xxx-large;
+      font-family: monospace;
+      color: white;" id="counter">0
+  </p>
+  <p style="text-align: center;
+      font-size: medium;
+      font-family: monospace;
+      color: white;">online users</p>
+  <p style="text-align: center;
+      font-size: medium;
+      font-family: monospace;
+      color: white;" id="db">here the data</p>
+
+      <input type="button" onclick="doDB()" value="click me"></input>
+
+  <!-- <p style="text-align: center;
+      font-size: medium;
+      font-family: monospace;
+      color: white;" id="visit">visit to the site</p> -->
+  <h6 style="color: white;
+      font-family: monospace;
+      margin-top: 300px;" id="logger"> Created By: Monzer Omer</h6>
+
+  <script type="text/javascript">
+    function log(thing){
+      document.getElementById("logger").innerHTML = thing;
+    }
+    var socket = io();
+    // var visit_View = document.getElementById("visit");
+    // var visit_count = localStorage.getItem("page_view");
+    function doDB() {
+      log("works!")
+      socket.emit("doDB", "hi", function(data){
+        log(data);
+      });
+    };
+    socket.on('counter', function (msg) {
+      document.getElementById("counter").innerHTML = msg;
+    });
+
+    socket.on("db", function (result) {
+      // log(result)
+      document.getElementById("db").innerHTML = result[1].name;
+    });
+    // if (visit_count){
+    // visit_count = Number(visit_count);
+    // localStorage.setItem("page_view" , visit_count++);
+
+    // } else {
+
+    //   visit_count = 1;
+    //   localStorage.setItem("page_view" , 1);
+
+    // }
+
+    // visit_View.innerHTML = `${visit_count} visit to the site`;
+  </script>
+</body>
+
+</html>
